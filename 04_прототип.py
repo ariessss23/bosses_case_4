@@ -213,7 +213,10 @@ def main():
     print(f"    файл: {OUT_CSV}")
 
 def calculate_importance():
-    print("\n--- ОЦЕНКА ЗДОРОВЬЯ С УЧЕТОМ ВАЖНОСТИ ---")
+    print("\n" + "="*45)
+    print("   ОЦЕНКА ЗДОРОВЬЯ УЧАСТКОВ (HEALTH SCORE)")
+    print("="*45)
+    
     health = {"site_01": 100, "site_02": 100, "site_03": 100, "site_04": 100, "site_05": 100}
     
     importance = {
@@ -235,10 +238,30 @@ def calculate_importance():
     except FileNotFoundError:
         return
 
+    # Названия участков для красоты
+    names = {
+        "site_01": "Птичник 1", "site_02": "Птичник 2", "site_03": "Птичник 3",
+        "site_04": "Инкубатор", "site_05": "Кормоцех  "
+    }
+
     for site, score in health.items():
         if score < 0: score = 0
-        print(f"  {site}: {score}/100")
-    print("------------------------------------------\n")
+        
+        # Цвета: Красный (< 50), Желтый (50-79), Зеленый (>= 80)
+        if score < 50:
+            color = "\033[91m" # Красный
+        elif score < 80:
+            color = "\033[93m" # Желтый
+        else:
+            color = "\033[92m" # Зеленый
+            
+        reset = "\033[0m" # Сброс цвета
+        
+        print(f"  {names[site]:<12} | {color}{score:3}/100{reset}")
+
+    print("="*45)
+    print("  (Красный < 50 | Желтый 50-79 | Зеленый >= 80)")
+    print("")
 
 if __name__ == "__main__":
     main()
