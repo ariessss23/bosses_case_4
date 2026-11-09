@@ -2,3 +2,7 @@ __pycache__/
 alerts_out.csv
 .venv/
 .DS_Store
+.venv/
+build/
+dist/
+*.spec
